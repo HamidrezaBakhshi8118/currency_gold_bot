@@ -43,6 +43,11 @@ def currency_menu():
         ]
         return InlineKeyboardMarkup(keyboard)
 
+def back_to_menu():
+     keyboard=[
+          [InlineKeyboardButton("بازگشت 🔙",callback_data="return")]
+     ]
+     return InlineKeyboardMarkup(keyboard)
 
 async def handler_button(update:Update,context:ContextTypes.DEFAULT_TYPE):
     query=update.callback_query
@@ -67,7 +72,7 @@ async def handler_button(update:Update,context:ContextTypes.DEFAULT_TYPE):
                        name=item["name"] 
                        if name=="دلار":  
                             text=f"دلار آمریکا 💵 : {item["name"]} , قیمت : {item["price"]} تومان"
-                            await query.edit_message_text(text=text)
+                            await query.edit_message_text(text=text,reply_markup=back_to_menu())
                             break        
     elif query.data=="18":
         async with aiohttp.ClientSession(headers=headers) as session:
@@ -82,7 +87,7 @@ async def handler_button(update:Update,context:ContextTypes.DEFAULT_TYPE):
                        name=item["name"] 
                        if name=="طلای 18 عیار":  
                             text=f"نوع طلا 💰 : {item["name"]} , قیمت : {item["price"]} تومان"
-                            await query.edit_message_text(text=text)
+                            await query.edit_message_text(text=text,reply_markup=back_to_menu())
                             break
     elif query.data=="24":
         async with aiohttp.ClientSession(headers=headers) as session:
@@ -97,7 +102,7 @@ async def handler_button(update:Update,context:ContextTypes.DEFAULT_TYPE):
                        name=item["name"] 
                        if name=="طلای 24 عیار":  
                             text=f"نوع طلا 💰 : {item["name"]} , قیمت : {item["price"]} تومان"
-                            await query.edit_message_text(text=text)
+                            await query.edit_message_text(text=text,reply_markup=back_to_menu())
                             break 
     elif query.data=="euro":
         async with aiohttp.ClientSession(headers=headers) as session:
@@ -112,7 +117,7 @@ async def handler_button(update:Update,context:ContextTypes.DEFAULT_TYPE):
                        name=item["name"] 
                        if name=="یورو":  
                             text=f"یورو 💶 : {item["name"]} , قیمت : {item["price"]} تومان"
-                            await query.edit_message_text(text=text)
+                            await query.edit_message_text(text=text,reply_markup=back_to_menu())
                             break            
                                                             
     elif query.data=="return":
@@ -121,10 +126,10 @@ async def handler_button(update:Update,context:ContextTypes.DEFAULT_TYPE):
 
 async def GetTextFromUser(update:Update,context:ContextTypes.DEFAULT_TYPE):
     text=update.message.text
-    match = re.search(r'uid=(\d+)', text)
-    uid=match.group(1)
-    await update.message.reply_text(f"Your uid is : {uid}") 
-
+    if text:
+     user=update.effective_user.first_name
+     await update.message.reply_text(f"{user} عزیز لطفا از منو جهت استغاده از بات اقدام کنید") 
+     await start(update,context)
 
 def main():
     print("bot is running...")
