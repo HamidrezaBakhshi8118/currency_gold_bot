@@ -67,8 +67,8 @@ async def handler_button(update:Update,context:ContextTypes.DEFAULT_TYPE):
                        return
 
                   data= await response.json()
-                  gold_list=data.get("currency")  
-                  for item in gold_list:
+                  currency_list=data.get("currency")  
+                  for item in currency_list:
                        name=item["name"] 
                        if name=="دلار":  
                             text=f"دلار آمریکا 💵 : {item["name"]} , قیمت : {item["price"]} تومان"
@@ -112,8 +112,8 @@ async def handler_button(update:Update,context:ContextTypes.DEFAULT_TYPE):
                        return
 
                   data= await response.json()
-                  gold_list=data.get("currency")  
-                  for item in gold_list:
+                  currency_list=data.get("currency")  
+                  for item in currency_list:
                        name=item["name"] 
                        if name=="یورو":  
                             text=f"یورو 💶 : {item["name"]} , قیمت : {item["price"]} تومان"
